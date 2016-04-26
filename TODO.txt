@@ -1,1 +1,1 @@
-# redmine_imperator
+http://www.redmine.org/projects/redmine/wiki/Plugin_Tutorial
