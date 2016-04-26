@@ -6,7 +6,7 @@
 
 ## Requirements
 
-Developed and tested on Redmine 3.0.x
+Developed and tested on Redmine 3.0, Ruby version 2.1
 
 ## Installation
 
