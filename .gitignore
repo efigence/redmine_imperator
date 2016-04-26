@@ -9,4 +9,5 @@
 /vendor/bundle
 /db/*.sqlite3
 /*.gem
+/rdoc
 .ruby-version
