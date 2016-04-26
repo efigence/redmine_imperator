@@ -14,23 +14,27 @@ Developed and tested on Redmine 3.0.x
 2. `git clone https://github.com/efigence/redmine_imperator`
 3. run `bundle install`
 4. Go back to root directory.
-5. `rake redmine:plugins:migrate RAILS_ENV=production`
+5. `bundle exec rake redmine:plugins:migrate RAILS_ENV=production`
 6. Restart Redmine.
+
+## Agile Project Management and Collaboration
+
+This project was built using [Pivotal Tracker](https://www.pivotaltracker.com/projects/1580447/). Please adhere to [A GUIDE TO GITHUB’S SERVICE HOOK FOR TRACKER](http://www.pivotaltracker.com/community/tracker-blog/guide-githubs-service-hook-tracker).
 
 ## License
 
-  Redmine Hamster plugin.
-  Copyright (C) 2016 Efigence S.A.
+Redmine Hamster plugin.
+Copyright (C) 2016 Efigence S.A.
 
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
 
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
