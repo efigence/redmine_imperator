@@ -1,4 +1,7 @@
-# Redmine Imperator [![Build Status](https://travis-ci.org/efigence/redmine_imperator.svg?branch=master)](https://travis-ci.org/efigence/redmine_imperator) [![Coverage Status](https://coveralls.io/repos/github/efigence/redmine_imperator/badge.png?branch=master)](https://coveralls.io/github/efigence/redmine_imperator?branch=master) [![Code Climate](https://codeclimate.com/github/efigence/redmine_imperator/badges/gpa.svg)](https://codeclimate.com/github/efigence/redmine_imperator)
+# Redmine Imperator
+
+[![Build Status](https://travis-ci.org/efigence/redmine_imperator.svg?branch=master)](https://travis-ci.org/efigence/redmine_imperator) [![Coverage Status](https://coveralls.io/repos/github/efigence/redmine_imperator/badge.png?branch=master)](https://coveralls.io/github/efigence/redmine_imperator?branch=master) [![Code Climate](https://codeclimate.com/github/efigence/redmine_imperator/badges/gpa.svg)](https://codeclimate.com/github/efigence/redmine_imperator) ![License](http://img.shields.io/:license-gpl3-blue.svg?style=flat-square)](http://www.gnu.org/licenses/gpl-3.0.html)
+
 
 Plugin helps users to control spent time on issue.
 
