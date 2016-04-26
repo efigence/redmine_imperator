@@ -17,6 +17,15 @@ Developed and tested on Redmine 3.0, Ruby version 2.1
 5. `bundle exec rake redmine:plugins:migrate RAILS_ENV=production`
 6. Restart Redmine.
 
+## Plugin Development & Testing
+
+```
+# These gems conflict with Redmine's:
+bundle install rake rdoc --no-rdoc --no-ri
+rake test
+rake rdoc
+```
+
 ## Agile Project Management and Collaboration
 
 This project was built using [Pivotal Tracker](https://www.pivotaltracker.com/projects/1580447/). Please adhere to [A GUIDE TO GITHUB’S SERVICE HOOK FOR TRACKER](http://www.pivotaltracker.com/community/tracker-blog/guide-githubs-service-hook-tracker).
