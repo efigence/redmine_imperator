@@ -1,4 +1,4 @@
-# Redmine Imperator [![Build Status](https://travis-ci.org/efigence/redmine_imperator.svg?branch=master)](https://travis-ci.org/efigence/redmine_imperator)
+# Redmine Imperator [![Build Status](https://travis-ci.org/efigence/redmine_imperator.svg?branch=master)](https://travis-ci.org/efigence/redmine_imperator) [![Coverage Status](https://coveralls.io/repos/github/efigence/redmine_imperator/badge.png?branch=master)](https://coveralls.io/github/efigence/redmine_imperator?branch=master) [![Code Climate](https://codeclimate.com/github/efigence/redmine_imperator/badges/gpa.svg)](https://codeclimate.com/github/efigence/redmine_imperator)
 
 Plugin helps users to control spent time on issue.
 

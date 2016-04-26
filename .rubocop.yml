@@ -1,0 +1,14 @@
+# https://github.com/bbatsov/rubocop/blob/master/config/default.yml
+
+AllCops:
+  DisabledByDefault: false
+
+# Redefined
+
+Metrics/LineLength:
+  Max: 120
+
+# Disabled
+
+Style/Documentation:
+  Enabled: false
