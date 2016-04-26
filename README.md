@@ -20,10 +20,12 @@ Developed and tested on Redmine 3.0, Ruby version 2.1
 ## Plugin Development & Testing
 
 ```
-# These gems conflict with Redmine's:
-bundle install rake rdoc --no-rdoc --no-ri
-rake test
-rake rdoc
+# Many gems conflict with Redmine's gems, always run bundle from redmine repository to generate compatible Gemfile.lock
+cd ~/redmine/
+bundle install
+cd ~/redmine/plugins/redmine_imperator/
+bundle exec rake test
+bundle exec rake rdoc
 ```
 
 ## Agile Project Management and Collaboration
