@@ -11,3 +11,4 @@
 /*.gem
 /rdoc
 .ruby-version
+Gemfile.lock
