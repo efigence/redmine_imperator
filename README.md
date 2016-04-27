@@ -35,12 +35,20 @@ bundle exec rake redmine:plugins:test NAME=redmine_imperator
 ## Some tests can be run inside a plugin, but extra setup is needed
 
 ```
-first, follow instructions from: https://github.com/dadooda/bundler-gemlocal
+# first, follow instructions from: https://github.com/dadooda/bundler-gemlocal
 cd ~/redmine/plugins/redmine_imperator/
+
+# copy config files
 cp Gemlocal.example Gemlocal
 cp config/database.yml.example config/database.yml
+
+# install local gems
 b install --path vendor/bundle
+
+# run tests inside the plugin
 bx rake test
+
+# generate documentation for the plugin
 bx rake rdoc
 ```
 

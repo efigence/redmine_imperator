@@ -1,2 +1,2 @@
 - http://www.redmine.org/projects/redmine/wiki/Plugin_Tutorial
-- move testing command to plugin to use coverall etc.
+- run additional testing command for plugin to use coverall etc.

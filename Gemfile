@@ -1,8 +1,5 @@
-source 'https://rubygems.org'
+# source 'https://rubygems.org'
 
+# put gems for redmine here
 group :development, :test do
-  gem 'rake'
-  gem 'coveralls'
-  gem 'codeclimate-test-reporter'
-  gem 'byebug'
 end

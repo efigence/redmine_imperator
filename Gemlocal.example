@@ -3,3 +3,12 @@ eval File.read(File.expand_path(File.dirname(__FILE__) + '/../../Gemfile'))
 
 # Source the main Gemfile.
 eval_gemfile File.expand_path("../Gemfile", __FILE__)
+
+# put gems for local plugin development & testing here
+group :development, :test do
+  gem 'rake', '~> 10.1.0'
+  gem 'simplecov', '~> 0.9.1'
+  gem 'coveralls'
+  gem 'codeclimate-test-reporter'
+  gem 'byebug'
+end
