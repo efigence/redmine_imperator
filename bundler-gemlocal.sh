@@ -9,7 +9,7 @@
 
 # A Gemlocal-aware alias to `bundle`.
 # CONFIG: You can rename this.
-b() {
+gemlocal_aware_bundle() {
   # The filename for a Gemlocal.
   # CONFIG: You can rename this.
   local C_GEMLOCAL="Gemlocal"
@@ -64,7 +64,3 @@ b() {
     bundle "$@"
   fi
 }
-
-# A Gemlocal-aware alias to `bundle exec`.
-# CONFIG: You can rename this.
-alias bx="b exec"
