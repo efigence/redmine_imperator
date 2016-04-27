@@ -27,7 +27,7 @@ script:
   - . bundler-gemlocal.sh
   - cp Gemlocal.example Gemlocal
   - cp config/database.yml.example config/database.yml
-  - gemlocal_aware_bundle install --path vendor/gemlocal_aware_bundle
-  - gemlocal_aware_bundle exec rake test
+  - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle install --path vendor/gemlocal_aware_bundle
+  - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle exec rake test
 before_script:
   - mysql -e 'create database redmine_imperator_test;'
