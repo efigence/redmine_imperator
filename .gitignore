@@ -12,3 +12,6 @@
 /rdoc
 .ruby-version
 Gemfile.lock
+/Gemlocal
+/Gemlocal.lock
+/config/database.yml

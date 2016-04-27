@@ -19,13 +19,29 @@ Developed and tested on Redmine 3.0, Ruby version 2.1
 
 ## Plugin Development & Testing
 
+When adding new gems, they may conflict with Redmine's gems, so always run bundle first from redmine repository to be able to generate next a compatible Gemfile.lock in the plugin dir.
+
 ```
-# Many gems conflict with Redmine's gems, always run bundle from redmine repository to generate compatible Gemfile.lock
 cd ~/redmine/
 bundle install
 cd ~/redmine/plugins/redmine_imperator/
-bundle exec rake test
-bundle exec rake rdoc
+bundle install --path vendor/bundle
+
+# run tests
+cd ~/redmine/
+bundle exec rake redmine:plugins:test NAME=redmine_imperator
+```
+
+## Some tests can be run inside a plugin, but extra setup is needed
+
+```
+first, follow instructions from: https://github.com/dadooda/bundler-gemlocal
+cd ~/redmine/plugins/redmine_imperator/
+cp Gemlocal.example Gemlocal
+cp config/database.yml.example config/database.yml
+b install --path vendor/bundle
+bx rake test
+bx rake rdoc
 ```
 
 ## Agile Project Management and Collaboration
@@ -34,7 +50,7 @@ This project was built using [Pivotal Tracker](https://www.pivotaltracker.com/pr
 
 ## License
 
-Redmine Hamster plugin.
+Redmine Imperator plugin.
 Copyright (C) 2016 Efigence S.A.
 
 This program is free software: you can redistribute it and/or modify
