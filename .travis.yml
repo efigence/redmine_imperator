@@ -4,6 +4,7 @@ cache:
   bundler: true
   directories:
     - vendor/bundle
+    - vendor/gemlocal_aware_bundle
     - workspace/redmine/vendor/bundle
 rvm:
   - 2.1
@@ -26,7 +27,7 @@ script:
   - . bundler-gemlocal.sh
   - cp Gemlocal.example Gemlocal
   - cp config/database.yml.example config/database.yml
-  - gemlocal_aware_bundle install --path vendor/bundle
+  - gemlocal_aware_bundle install --path vendor/gemlocal_aware_bundle
   - gemlocal_aware_bundle exec rake test
 before_script:
   - mysql -e 'create database redmine_imperator_test;'
