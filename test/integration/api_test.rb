@@ -10,11 +10,11 @@ class ApiTest < ActionController::TestCase
   def test_api_should_work
     assert_difference('User.count') do
       post :create, {
-        :user => {
-          :login => 'foo', :firstname => 'Firstname', :lastname => 'Lastname',
-          :mail => 'foo@example.net', :password => 'secret123'}
-        },
-        {}
+        user: {
+          login: 'foo', firstname: 'Firstname', lastname: 'Lastname',
+          mail: 'foo@example.net', password: 'secret123'
+        }
+      }, {}
       assert_response 302
     end
   end
