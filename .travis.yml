@@ -27,6 +27,7 @@ script:
   - . bundler-gemlocal.sh
   - cp Gemlocal.example Gemlocal
   - cp config/database.yml.example config/database.yml
+  RACK_ENV
   - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle install --path vendor/gemlocal_aware_bundle
   - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle exec rake test
 before_script:

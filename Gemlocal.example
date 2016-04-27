@@ -1,5 +1,10 @@
 # Load the Redmine's Gemfile
-eval File.read(File.expand_path(File.dirname(__FILE__) + '/../../Gemfile'))
+if ENV['CI'] && ENV['TRAVIS']
+  gemfile_location = '/home/travis/build/efigence/redmine_imperator/workspace/redmine/Gemfile'
+  eval File.read(gemfile_location)
+else
+  eval File.read(File.expand_path(File.dirname(__FILE__) + '/../../Gemfile'))
+end
 
 # Source the main Gemfile.
 eval_gemfile File.expand_path("../Gemfile", __FILE__)
