@@ -1,4 +1,8 @@
-require File.expand_path(File.dirname(__FILE__) + '/../../../test/test_helper')
+if ENV['CI'] && ENV['TRAVIS']
+  require '/home/travis/build/efigence/redmine_imperator/workspace/redmine/test/test_helper'
+else
+  require File.expand_path(File.dirname(__FILE__) + '/../../../test/test_helper')
+end
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 # Configure Rails Envinronment
 ENV['RAILS_ENV'] = 'test'
