@@ -1,6 +1,6 @@
 module ImperatorApi
   module V1
-    class UsersController < ::UsersController
+    class RolesController < ::RolesController
       include Concerns::ErrorHandling
     end
   end

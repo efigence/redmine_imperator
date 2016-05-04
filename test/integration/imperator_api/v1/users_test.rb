@@ -25,8 +25,8 @@ module ImperatorApi
         assert_equal 2, json['user']['id']
       end
 
-      test 'GET /users/:id.json with include=memberships should include memberships' do
-        get '/users/2.json?include=memberships'
+      test 'GET /imperator_api/v1/users/:id.json with include=memberships should include memberships' do
+        get '/imperator_api/v1/users/2.json?include=memberships'
 
         assert_response :success
         json = ActiveSupport::JSON.decode(response.body)
@@ -38,9 +38,9 @@ module ImperatorApi
         }], json['user']['memberships']
       end
 
-      test 'POST /users.json with valid parameters should create the user' do
+      test 'POST /imperator_api/v1/users.json with valid parameters should create the user' do
         assert_difference('User.count') do
-          post '/users.json', {
+          post '/imperator_api/v1/users.json', {
             user: {
               login: 'foo', firstname: 'Firstname', lastname: 'Lastname',
               mail: 'foo@example.net', password: 'secret123',
@@ -64,9 +64,9 @@ module ImperatorApi
         assert_equal user.id, json['user']['id']
       end
 
-      test 'POST /users.json with with invalid parameters should return errors' do
+      test 'POST /imperator_api/v1/users.json with with invalid parameters should return errors' do
         assert_no_difference('User.count') do
-          post '/users.json', { user: { login: 'foo', lastname: 'Lastname', mail: 'foo' } }, credentials('admin')
+          post '/imperator_api/v1/users.json', { user: { login: 'foo', lastname: 'Lastname', mail: 'foo' } }, credentials('admin')
         end
 
         assert_response :unprocessable_entity
@@ -77,9 +77,9 @@ module ImperatorApi
         assert_kind_of Array, json['errors']
       end
 
-      test 'PUT /users/:id.json with valid parameters should update the user' do
+      test 'PUT /imperator_api/users/:id.json with valid parameters should update the user' do
         assert_no_difference('User.count') do
-          put '/users/2.json', {
+          put '/imperator_api/v1/users/2.json', {
             user: {
               login: 'jsmith', firstname: 'John', lastname: 'Renamed',
               mail: 'jsmith@somenet.foo' }
@@ -98,9 +98,9 @@ module ImperatorApi
         assert_equal '', @response.body
       end
 
-      test 'PUT /users/:id.json with invalid parameters' do
+      test 'PUT /imperator_api/v1/users/:id.json with invalid parameters' do
         assert_no_difference('User.count') do
-          put '/users/2.json', {
+          put '/imperator_api/v1/users/2.json', {
             user: {
               login: 'jsmith', firstname: '', lastname: 'Lastname',
               mail: 'foo' }

@@ -5,7 +5,7 @@ module ImperatorApi
         extend ActiveSupport::Concern
 
         included do
-          rescue_from ActiveRecord::RecordNotFound, with: :not_found
+          rescue_from ActiveRecord::RecordNotFound, with: :render_api_not_found
           rescue_from(ActionController::RoutingError) do
             render json: {
               error: 'The resource you were looking for does not exist'
@@ -15,17 +15,17 @@ module ImperatorApi
             if Rails.env.production?
               message = "We're sorry, but something went wrong. " \
 "We've been notified about this issue and we'll take a look at it shortly."
-              render_error(message, :internal_server_error)
+              render_api_error(message, :internal_server_error)
             else
-              render_error(exception.message, :internal_server_error)
+              render_api_error(exception.message + exception.backtrace.to_a.slice(0, 4).join(', '), :internal_server_error)
             end
           end
 
-          def not_found
-            render_error(I18n.t('errors.messages.not_found').to_s, :not_found)
+          def render_api_not_found
+            render_api_error(I18n.t('errors.messages.not_found').to_s, :not_found)
           end
 
-          def render_error(message, status)
+          def render_api_error(message, status)
             render json: { error: { message: message } },
                    status: status
           end

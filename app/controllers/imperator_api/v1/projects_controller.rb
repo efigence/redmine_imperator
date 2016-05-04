@@ -1,6 +1,6 @@
 module ImperatorApi
   module V1
-    class UsersController < ::UsersController
+    class ProjectsController < ::ProjectsController
       include Concerns::ErrorHandling
     end
   end

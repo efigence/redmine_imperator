@@ -4,7 +4,7 @@ module ImperatorApi
       include Concerns::ErrorHandling
 
       def route_not_found
-        render_error('route not found', :bad_request)
+        render_api_not_found('route not found', :bad_request)
       end
     end
   end
