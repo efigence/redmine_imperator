@@ -13,7 +13,7 @@ module ImperatorApi
           end
           rescue_from(StandardError, Exception) do |exception|
             if Rails.env.production?
-              messsage = "We're sorry, but something went wrong. " \
+              message = "We're sorry, but something went wrong. " \
 "We've been notified about this issue and we'll take a look at it shortly."
               render_error(message, :internal_server_error)
             else
