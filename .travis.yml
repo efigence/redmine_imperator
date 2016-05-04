@@ -29,6 +29,7 @@ script:
   - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle exec rake test
   - cd $PATH_TO_REDMINE
   - cp $PATH_TO_PLUGINS/$PLUGIN/.travis-database.$DB.yml config/database.yml
+  - cd $PLUGIN_DIR
   - bash -x ./.travis-init.sh -t || exit 1
   - bash -x ./.travis-init.sh -u || exit 1
 before_script:
