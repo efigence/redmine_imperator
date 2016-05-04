@@ -32,7 +32,7 @@ cd ~/redmine/
 bundle exec rake redmine:plugins:test NAME=redmine_imperator
 ```
 
-## Some tests can be run inside a plugin, but extra setup is needed
+## Tests can be run inside a plugin, but additional setup is required
 
 ```
 # first, follow instructions from: https://github.com/dadooda/bundler-gemlocal

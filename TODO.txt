@@ -1,2 +1,2 @@
 - http://www.redmine.org/projects/redmine/wiki/Plugin_Tutorial
-- # KNOWN_ISSUES: redmine tests are run first, but hooks from travis can work only when tests are run from the plugin (the next step), so travis hooks don't work on failures
+- # KNOWN_ISSUES: redmine tests are run first, but hooks from travis can work only when tests are run from the plugin (the next step), so travis hooks don't work on failures # FIXME: run plugin tests first, redmine tests later
