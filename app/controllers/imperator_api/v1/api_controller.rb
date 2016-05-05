@@ -2,9 +2,10 @@ module ImperatorApi
   module V1
     class ApiController < ::ActionController::Base
       include Concerns::ErrorHandling
+      include Concerns::AccessControl
 
       def route_not_found
-        render_api_not_found('route not found', :bad_request)
+        render json: { error: { message: 'route not found' } }, status: :bad_request
       end
     end
   end

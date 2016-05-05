@@ -19,7 +19,7 @@ module ImperatorApi
     end
 
     def matches_format?(format)
-      format.to_s == 'application/json'
+      format.to_s == 'application/json' || format.to_s == 'application/xml'
     end
 
     def matches_headers?(headers)

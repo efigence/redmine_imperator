@@ -108,12 +108,10 @@ module ImperatorApi
         assert_kind_of Hash, json
         assert_kind_of Array, json['projects']
         assert_kind_of Hash, json['projects'].first
-        assert json['projects'].first.key?('trackers')
+        assert json['projects'].first.key?('enabled_modules')
         assert_kind_of Array, json['projects'].first['enabled_modules']
-        associations = json['projects'].first['enabled_modules']
-                       .select do |k, v|
-                         k.to_s == 'name' && v == 'issue_tracking'
-                       end
+        associations = json['projects'].first['enabled_modules'].select { |k, _v| k['name'] == 'issue_tracking' }
+
         assert_not_empty associations
       end
 
@@ -215,6 +213,7 @@ module ImperatorApi
             }
           }, credentials('admin')
         end
+
         assert_response :ok
         assert_equal '', @response.body
         project = Project.find(2)
