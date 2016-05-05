@@ -6,25 +6,6 @@ module ImperatorApi
     class GroupsTest < Redmine::ApiTest::Base
       fixtures :users, :groups_users, :email_addresses
 
-      test 'GET /imperator_api/v1/groups.xml should require authentication' do
-        get '/imperator_api/v1/groups.xml'
-        assert_response 401
-      end
-
-      test 'GET /imperator_api/v1/groups.xml should return givable groups' do
-        get '/imperator_api/v1/groups.xml', {}, credentials('admin')
-        assert_response :success
-        assert_equal 'application/xml', response.content_type
-
-        assert_select 'groups' do
-          assert_select 'group', Group.givable.count
-          assert_select 'group' do
-            assert_select 'name', text: 'A Team'
-            assert_select 'id', text: '10'
-          end
-        end
-      end
-
       test 'GET /imperator_api/v1/groups.xml?builtin=1 should return all groups' do
         get '/imperator_api/v1/groups.xml?builtin=1', {}, credentials('admin')
         assert_response :success
