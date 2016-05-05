@@ -13,7 +13,16 @@ scope module: 'imperator_api', path: '/imperator_api' do
     delete 'groups/:id/users/:user_id', to: 'groups#remove_user' # , :id => /\d+/, :as => 'group_user'
 
     resources :custom_fields, only: :index
-    resources :projects
+    resources :projects do
+      shallow do
+        resources :memberships, controller: 'members', only: [:index, :show, :new, :create, :update, :destroy] do
+          # collection do
+          #   get 'autocomplete'
+          # end
+        end
+      end
+    end
+
     resources :roles
     resources :users
 
