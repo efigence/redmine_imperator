@@ -54,6 +54,15 @@ bx rake test
 bx rake rdoc
 ```
 
+## Usage examples
+
+```
+curl -v -H "Content-Type: application/json" -X GET \
+  -H "X-Redmine-API-Key: d293e1fbcae7e08c6f135d736e2f7f1be2d5eb35" \
+  -H "X-Imperator-API-Key: 2ce03d6ea21775217f0ef4b8e56ce51abf86977a34270147b78210dc24632eda20f2b26fea440953cdeb2cb0fd6b82cbe2254a48f2b5d916db48e9851d9200d0" \
+  http://localhost:3000/imperator_api/v1/users/1.json
+```
+
 ## Agile Project Management and Collaboration
 
 This project was built using [Pivotal Tracker](https://www.pivotaltracker.com/projects/1580447/). Please adhere to [A GUIDE TO GITHUB’S SERVICE HOOK FOR TRACKER](http://www.pivotaltracker.com/community/tracker-blog/guide-githubs-service-hook-tracker).
