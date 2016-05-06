@@ -6,7 +6,7 @@ module ImperatorApi
       fixtures :roles
 
       test 'GET /imperator_api/v1/roles.json should return the roles' do
-        get '/imperator_api/v1/roles.json'
+        get '/imperator_api/v1/roles.json', {}, imperator_api_auth_headers
 
         assert_response :success
         assert_equal 'application/json', @response.content_type
@@ -19,7 +19,7 @@ module ImperatorApi
       end
 
       test 'GET /imperator_api/v1/roles/:id.json should return the role' do
-        get '/imperator_api/v1/roles/1.json'
+        get '/imperator_api/v1/roles/1.json', {}, imperator_api_auth_headers
 
         assert_response :success
         assert_equal 'application/json', @response.content_type
@@ -32,7 +32,7 @@ module ImperatorApi
         assert_include 'view_issues', json['role']['permissions']
       end
 
-      # not supported officially:
+      # actions not supported by Redmine API yet:
 
       test 'POST /imperator_api/v1/roles.json with valid parameters should create the role' do
         skip

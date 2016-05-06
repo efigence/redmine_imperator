@@ -6,10 +6,14 @@ module ImperatorApi
       fixtures :users
 
       def test_api_should_deny_without_credentials
-        get '/imperator_api/v1/users/current.xml', {}
+        get '/imperator_api/v1/users/current.json', {}
         assert_response 401
+        assert_equal 'application/json', @response.content_type
         assert_equal User.anonymous, User.current
-        assert response.headers.key?('WWW-Authenticate')
+        # assert response.headers.key?('WWW-Authenticate')
+        json = ActiveSupport::JSON.decode(response.body)
+        assert_kind_of Hash, json
+        assert_equal 'Invalid X-Imperator-API-Key', json['errors']
       end
 
       def test_api_should_accept_http_basic_auth_using_username_and_password
@@ -49,7 +53,7 @@ module ImperatorApi
       def test_api_should_accept_auth_using_api_key_as_parameter
         user = User.generate!
         token = Token.create!(user: user, action: 'api')
-        get "/imperator_api/v1/users/current.xml?key=#{token.value}", {}
+        get "/imperator_api/v1/users/current.xml?key=#{token.value}", {}, imperator_api_auth_headers
         assert_response 200
         assert_equal user, User.current
       end
@@ -65,7 +69,9 @@ module ImperatorApi
       def test_api_should_accept_auth_using_api_key_as_request_header
         user = User.generate!
         token = Token.create!(user: user, action: 'api')
-        get '/imperator_api/v1/users/current.xml', {}, 'X-Redmine-API-Key' => token.value.to_s
+        get '/imperator_api/v1/users/current.xml', {},
+                                                      'X-Redmine-API-Key' => token.value.to_s,
+                                                      'X-Imperator-API-Key' => ::ImperatorApi::Key.new.show_secret
         assert_response 200
         assert_equal user, User.current
       end
@@ -73,7 +79,9 @@ module ImperatorApi
       def test_api_should_deny_auth_using_wrong_api_key_as_request_header
         user = User.generate!
         token = Token.create!(user: user, action: 'feeds') # not the API key
-        get '/imperator_api/v1/users/current.xml', {}, 'X-Redmine-API-Key' => token.value.to_s
+        get '/imperator_api/v1/users/current.xml', {},
+                                                      'X-Redmine-API-Key' => token.value.to_s,
+                                                      'X-Imperator-API-Key' => ::ImperatorApi::Key.new.show_secret
         assert_response 401
         assert_equal User.anonymous, User.current
       end
@@ -98,28 +106,22 @@ module ImperatorApi
         end
       end
 
-      def test_api_request_should_not_use_user_session
-        log_user('jsmith', 'jsmith')
-
-        get '/imperator_api/v1/users/current'
-        assert_response :success
-
-        get '/imperator_api/v1/users/current.json'
-        assert_response 401
-      end
-
       def test_api_should_accept_switch_user_header_for_admin_user
         user = User.find(1)
         su = User.find(4)
 
-        get '/imperator_api/v1/users/current', {}, 'X-Redmine-API-Key' => user.api_key, 'X-Redmine-Switch-User' => su.login
+        get '/imperator_api/v1/users/current', {}, 'X-Redmine-API-Key' => user.api_key,
+                                                   'X-Redmine-Switch-User' => su.login,
+                                                   'X-Imperator-API-Key' => ::ImperatorApi::Key.new.show_secret
         assert_response :success
         assert_equal su, assigns(:user)
         assert_equal su, User.current
       end
 
       def test_api_should_respond_with_412_when_trying_to_switch_to_a_invalid_user
-        get '/imperator_api/v1/users/current', {}, 'X-Redmine-API-Key' => User.find(1).api_key, 'X-Redmine-Switch-User' => 'foobar'
+        get '/imperator_api/v1/users/current', {}, 'X-Redmine-API-Key' => User.find(1).api_key,
+                                                   'X-Redmine-Switch-User' => 'foobar',
+                                                   'X-Imperator-API-Key' => ::ImperatorApi::Key.new.show_secret
         assert_response 412
       end
 
@@ -127,7 +129,9 @@ module ImperatorApi
         user = User.find(5)
         assert user.locked?
 
-        get '/imperator_api/v1/users/current', {}, 'X-Redmine-API-Key' => User.find(1).api_key, 'X-Redmine-Switch-User' => user.login
+        get '/imperator_api/v1/users/current', {}, 'X-Redmine-API-Key' => User.find(1).api_key,
+                                                   'X-Redmine-Switch-User' => user.login,
+                                                   'X-Imperator-API-Key' => ::ImperatorApi::Key.new.show_secret
         assert_response 412
       end
 
@@ -135,7 +139,9 @@ module ImperatorApi
         user = User.find(2)
         su = User.find(4)
 
-        get '/imperator_api/v1/users/current', {}, 'X-Redmine-API-Key' => user.api_key, 'X-Redmine-Switch-User' => su.login
+        get '/imperator_api/v1/users/current', {}, 'X-Redmine-API-Key' => user.api_key,
+                                                   'X-Redmine-Switch-User' => su.login,
+                                                   'X-Imperator-API-Key' => ::ImperatorApi::Key.new.show_secret
         assert_response :success
         assert_equal user, assigns(:user)
         assert_equal user, User.current

@@ -2,7 +2,7 @@ module ImperatorApi
   class RouteConstraints
     def initialize(options)
       @version = options[:version]
-      @default = options[:default]
+      @default = options[:default] || false
     end
 
     def matches?(req)

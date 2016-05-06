@@ -1,3 +1,4 @@
+# prevent responses other than json which in turn return 403, why?
 module ImperatorApi
   module V1
     module Concerns
@@ -18,7 +19,7 @@ module ImperatorApi
               render_imperator_api_error(message: message, status: :internal_server_error)
             else
               render_imperator_api_error(message: exception.message + exception.backtrace.to_a.slice(0, 4).join(', '),
-                           status: :internal_server_error)
+                                         status: :internal_server_error)
             end
           end
 
@@ -74,7 +75,7 @@ module ImperatorApi
           # redmie override!
           def authorize(ctrl = params[:controller], action = params[:action], global = false)
             # hack
-            ctrl = ctrl.to_s.gsub(/imperator_api\/v1\//, '')
+            ctrl = ctrl.to_s.gsub(%r{imperator_api\/v1\/}, '')
 
             allowed = User.current.allowed_to?({ controller: ctrl, action: action },
                                                @project || @projects,

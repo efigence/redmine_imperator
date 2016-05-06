@@ -15,4 +15,5 @@ Gemfile.lock
 /Gemlocal
 /Gemlocal.lock
 /config/database.yml
+/config/settings.yml
 .byebug_history

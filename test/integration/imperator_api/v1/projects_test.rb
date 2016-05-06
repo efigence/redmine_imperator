@@ -14,7 +14,7 @@ module ImperatorApi
       end
 
       test 'GET /imperator_api/v1/projects.json should return projects' do
-        get '/imperator_api/v1/projects.json', credentials('admin')
+        get '/imperator_api/v1/projects.json', {}, imperator_api_auth_headers
         assert_response :success
         assert_equal 'application/json', @response.content_type
 
@@ -28,7 +28,7 @@ module ImperatorApi
       end
 
       test 'GET /imperator_api/v1/projects.json should return pagination meta' do
-        get '/imperator_api/v1/projects.json', credentials('admin')
+        get '/imperator_api/v1/projects.json', {}, imperator_api_auth_headers
         assert_response :success
         assert_equal 'application/json', @response.content_type
 
@@ -40,7 +40,7 @@ module ImperatorApi
       end
 
       test 'GET /imperator_api/v1/projects/:id.json should return the project' do
-        get '/imperator_api/v1/projects/1.json', credentials('admin')
+        get '/imperator_api/v1/projects/1.json', {}, imperator_api_auth_headers
         assert_response :success
         assert_equal 'application/json', @response.content_type
 
@@ -54,7 +54,7 @@ module ImperatorApi
         fields should not display hidden custom fields' do
         ProjectCustomField.find_by_name('Development status').update_attribute :visible, false
 
-        get '/imperator_api/v1/projects/1.json', credentials('admin')
+        get '/imperator_api/v1/projects/1.json', {}, imperator_api_auth_headers
         assert_response :success
         assert_equal 'application/json', @response.content_type
 
@@ -66,7 +66,7 @@ module ImperatorApi
       end
 
       test 'GET /imperator_api/v1/projects.json with include=issue_categories should return categories' do
-        get '/imperator_api/v1/projects.json?include=issue_categories', credentials('admin')
+        get '/imperator_api/v1/projects.json?include=issue_categories', {}, imperator_api_auth_headers
         assert_response :success
         assert_equal 'application/json', @response.content_type
         json = ActiveSupport::JSON.decode(response.body)
@@ -80,8 +80,7 @@ module ImperatorApi
       end
 
       test 'GET /imperator_api/v1/projects.json with include=trackers should return trackers' do
-        skip
-        get '/imperator_api/v1/projects.json?include=trackers', credentials('admin')
+        get '/imperator_api/v1/projects.json?include=trackers', {}, imperator_api_auth_headers
 
         assert_response :success
         assert_equal 'application/json', @response.content_type
@@ -92,15 +91,13 @@ module ImperatorApi
         assert_kind_of Hash, json['projects'].first
         assert json['projects'].first.key?('trackers')
         assert_kind_of Array, json['projects'].first['trackers']
-        associations = json['projects'].first['trackers']
-                       .select do |k, v|
-                         k.to_s == 'id' && v == '2'
-                       end
-        assert_equal 'Feature request', associations.first.try(:[], 'name')
+
+        associations = json['projects'].first['trackers'].select { |k, _v| k['name'] == 'Feature request' }
+        assert_not_empty associations
       end
 
       test 'GET /imperator_api/v1/projects.json with include=enabled_modules should return enabled modules' do
-        get '/imperator_api/v1/projects.json?include=enabled_modules', credentials('admin')
+        get '/imperator_api/v1/projects.json?include=enabled_modules', {}, imperator_api_auth_headers
         assert_response :success
         assert_equal 'application/json', @response.content_type
 

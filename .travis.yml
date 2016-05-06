@@ -25,6 +25,7 @@ script:
   - . bundler-gemlocal.sh
   - cp Gemlocal.example Gemlocal
   - cp config/database.yml.example config/database.yml
+  - cp config/settings.yml.example config/settings.yml
   - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle install --path vendor/gemlocal_aware_bundle
   - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle exec rake test
   - cp $PLUGIN_DIR/.travis-database.$DB.yml $PATH_TO_REDMINE/config/database.yml

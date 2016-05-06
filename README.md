@@ -26,6 +26,8 @@ cd ~/redmine/
 bundle install
 cd ~/redmine/plugins/redmine_imperator/
 bundle install --path vendor/bundle
+cp config/database.yml.example config/database.yml
+cp config/settings.yml.example config/settings.yml
 
 # run tests
 cd ~/redmine/
@@ -41,7 +43,6 @@ cd ~/redmine/plugins/redmine_imperator/
 
 # copy config files
 cp Gemlocal.example Gemlocal
-cp config/database.yml.example config/database.yml
 
 # install local gems
 b install --path vendor/bundle

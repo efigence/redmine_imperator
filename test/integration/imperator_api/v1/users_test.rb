@@ -16,7 +16,7 @@ module ImperatorApi
       end
 
       test 'GET /imperator_api/v1/users/:id.json should return the user' do
-        get '/imperator_api/v1/users/2.json'
+        get '/imperator_api/v1/users/2.json', {}, imperator_api_auth_headers
 
         assert_response :success
         json = ActiveSupport::JSON.decode(response.body)
@@ -26,7 +26,7 @@ module ImperatorApi
       end
 
       test 'GET /imperator_api/v1/users/:id.json with include=memberships should include memberships' do
-        get '/imperator_api/v1/users/2.json?include=memberships'
+        get '/imperator_api/v1/users/2.json?include=memberships', {}, imperator_api_auth_headers
 
         assert_response :success
         json = ActiveSupport::JSON.decode(response.body)
