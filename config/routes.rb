@@ -2,29 +2,18 @@ require 'imperator_api/route_constraints'
 
 scope module: 'imperator_api', path: '/imperator_api' do
   scope module: :v1, path: '/v1', constraints: ::ImperatorApi::RouteConstraints.new(version: 1, default: true) do
-    resources :groups do
-      # resources :memberships, controller: 'principal_memberships'
-      # member do
-      #   get 'autocomplete_for_user'
-      # end
-    end
-    # get 'groups/:id/users/new', to: 'groups#new_users', id: /\d+/ # , :as => 'new_group_users'
-    post 'groups/:id/users', to: 'groups#add_users', id: /\d+/ # , :as => 'group_users'
-    delete 'groups/:id/users/:user_id', to: 'groups#remove_user' # , :id => /\d+/, :as => 'group_user'
-
+    resources :groups, except: [:new, :edit]
+    post 'groups/:id/users', to: 'groups#add_users', id: /\d+/
+    delete 'groups/:id/users/:user_id', to: 'groups#remove_user'
     resources :custom_fields, only: :index
-    resources :projects do
+    resources :projects, except: [:new, :edit] do
       shallow do
-        resources :memberships, controller: 'members', only: [:index, :show, :new, :create, :update, :destroy] do
-          # collection do
-          #   get 'autocomplete'
-          # end
-        end
+        resources :memberships, controller: 'members', only: [:index, :show, :create, :update, :destroy]
       end
     end
 
-    resources :roles
-    resources :users
+    resources :roles, except: [:new, :edit]
+    resources :users, except: [:new, :edit]
 
     # stubbed with status code 418 - actions only for authentication tests:
     resources :issues
