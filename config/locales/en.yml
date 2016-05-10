@@ -1,3 +1,6 @@
 # English strings go here for Rails i18n
 en:
-  # my_label: "My label"
+  redmine_imperator:
+    errors:
+      messages:
+        not_found: Not found
