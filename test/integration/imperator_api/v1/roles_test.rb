@@ -35,28 +35,27 @@ module ImperatorApi
       # actions not supported by Redmine API yet:
 
       test 'POST /imperator_api/v1/roles.json with valid parameters should create the role' do
-        skip
+        role_name = 'Example role'
         assert_difference('Role.count') do
           post '/imperator_api/v1/roles.json', {
-            permissions: Role.non_member.permissions
+            role: { name: role_name }
           }, credentials('admin')
         end
 
         role = Role.order('id DESC').first
-        assert_equal 123, role.user_id
+        assert_equal role_name, role.name
 
         assert_response :created
         assert_equal 'application/json', @response.content_type
         json = ActiveSupport::JSON.decode(response.body)
         assert_kind_of Hash, json
         assert_kind_of Hash, json['role']
-        assert_equal user.id, json['role']['id']
+        assert_equal role_name, json['role']['name']
       end
 
       test 'POST /imperator_api/v1/roles.json with with invalid parameters should return errors' do
-        skip
         assert_no_difference('Role.count') do
-          post '/imperator_api/v1/roles.json', { foo: 'bar' }, credentials('admin')
+          post '/imperator_api/v1/roles.json', { role: { name: '' } }, credentials('admin')
         end
 
         assert_response :unprocessable_entity
@@ -68,25 +67,24 @@ module ImperatorApi
       end
 
       test 'PUT /imperator_api/v1/roles/:id.json with valid parameters should update the role' do
-        skip
+        new_name = 'Edited role name'
         assert_no_difference('Role.count') do
           put '/imperator_api/v1/roles/2.json', {
-            permissions: Role.non_member.permissions
+            role: { name: new_name }
           }, credentials('admin')
         end
 
         role = Role.find(2)
-        assert_equal({}, role.permissions)
+        assert_equal(new_name, role.name)
 
         assert_response :ok
         assert_equal '', @response.body
       end
 
       test 'PUT /imperator_api/v1/roles/:id.json with invalid parameters' do
-        skip
         assert_no_difference('Role.count') do
           put '/imperator_api/v1/roles/2.json', {
-            permissions: Role.non_member.permissions
+            role: { name: '' }
           }, credentials('admin')
         end
 
@@ -96,6 +94,17 @@ module ImperatorApi
         assert_kind_of Hash, json
         assert json.key?('errors')
         assert_kind_of Array, json['errors']
+      end
+
+      test 'DELETE /imperator_api/v1/roles/:id.json' do
+        role = Role.find 3
+        role.member_roles.destroy_all
+        assert_difference('Role.count', -1) do
+          delete '/imperator_api/v1/roles/3.json', {}, credentials('admin')
+        end
+
+        assert_response :ok
+        assert_equal '', @response.body
       end
     end
   end
