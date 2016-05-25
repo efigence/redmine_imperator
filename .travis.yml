@@ -10,7 +10,6 @@ rvm:
   - 2.1
 env:
   - REDMINE_VERSION=3.0.1 VERBOSE=no DB=mysql
-
 script:
   - PLUGIN_DIR=$(pwd)
   - export PLUGIN=redmine_imperator
@@ -27,7 +26,6 @@ script:
   - cp config/database.yml.example config/database.yml
   - cp config/settings.yml.example config/settings.yml
   - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle install --path vendor/gemlocal_aware_bundle
-  - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle exec rake test
   - cp $PLUGIN_DIR/.travis-database.$DB.yml $PATH_TO_REDMINE/config/database.yml
   - bash -x ./.travis-init.sh -t || exit 1
   - bash -x ./.travis-init.sh -u || exit 1

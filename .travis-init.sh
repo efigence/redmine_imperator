@@ -63,7 +63,7 @@ run_tests() {
     TRACE=--trace
   fi
 
-  script -e -c "bundle exec rake redmine:plugins:test NAME="$PLUGIN $VERBOSE
+  script -e -c "BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle exec rake test"
 }
 
 uninstall() {
