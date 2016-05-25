@@ -53,19 +53,6 @@ clone_redmine() {
   fi
 }
 
-run_tests() {
-  # exit if tests fail
-  set -e
-
-  cd $PATH_TO_REDMINE
-
-  if [ "$VERBOSE" = "yes" ]; then
-    TRACE=--trace
-  fi
-
-  script -e -c "BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle exec rake test"
-}
-
 uninstall() {
   set -e # exit if migrate fails
   cd $PATH_TO_REDMINE
@@ -109,7 +96,6 @@ while getopts :irtu opt
 do case "$opt" in
   r)  clone_redmine; exit 0;;
   i)  run_install;  exit 0;;
-  t)  run_tests $2;  exit 0;;
   u)  uninstall;  exit 0;;
   [?]) echo "i: install; r: clone redmine; t: run tests; u: uninstall";;
   esac
