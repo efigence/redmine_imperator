@@ -26,8 +26,7 @@ script:
   - cp config/database.yml.example config/database.yml
   - cp config/settings.yml.example config/settings.yml
   - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle install --path vendor/gemlocal_aware_bundle
-  - cp $PLUGIN_DIR/.travis-database.$DB.yml $PATH_TO_REDMINE/config/database.yml
-  - bash -x ./.travis-init.sh -t || exit 1
+  - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle exec rake test
   - bash -x ./.travis-init.sh -u || exit 1
 before_script:
   - mysql -e 'create database redmine_imperator_test;'
