@@ -12,6 +12,8 @@ scope module: 'imperator_api', path: '/imperator_api' do
       end
     end
 
+    get 'robots.txt', to: 'welcome#robots'
+
     resources :roles, except: [:new, :edit]
     resources :users, except: [:new, :edit]
 
