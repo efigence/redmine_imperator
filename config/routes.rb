@@ -10,6 +10,9 @@ scope module: 'imperator_api', path: '/imperator_api' do
       shallow do
         resources :memberships, controller: 'members', only: [:index, :show, :create, :update, :destroy]
       end
+        member do
+          post 'copy'
+        end
     end
 
     get 'robots.txt', to: 'welcome#robots'

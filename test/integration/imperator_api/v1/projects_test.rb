@@ -201,22 +201,6 @@ module ImperatorApi
         assert_equal %w(issue_tracking news time_tracking), project.enabled_module_names.sort
       end
 
-      test 'PUT /imperator_api/v1/projects/:id.json should accept tracker_ids attribute' do
-        assert_no_difference 'Project.count' do
-          put '/imperator_api/v1/projects/2.json', {
-            project: {
-              name: 'API update',
-              tracker_ids: [1, 3]
-            }
-          }, credentials('admin')
-        end
-
-        assert_response :ok
-        assert_equal '', @response.body
-        project = Project.find(2)
-        assert_equal [1, 3], project.trackers.map(&:id).sort
-      end
-
       test 'PUT /imperator_api/v1/projects/:id.json with invalid parameters should return errors' do
         assert_no_difference('Project.count') do
           put '/imperator_api/v1/projects/2.json', { project: { name: '' } }, credentials('admin')
@@ -239,6 +223,23 @@ module ImperatorApi
         assert_equal '', @response.body
         assert_nil Project.find_by_id(2)
       end
+
+      test 'POST /imperator_api/v1/projects/1/copy.json should create a copy' do
+        post '/imperator_api/v1/projects/1/copy.json', { project: { name: 'Copy', identifier: 'copy' } }, credentials('admin')
+        assert_response :created
+        assert_equal 'application/json', @response.content_type
+        json = ActiveSupport::JSON.decode(response.body)
+        assert_kind_of Hash, json
+        assert_equal 'copy', json['identifier']
+        assert_equal 'Copy', json['name']
+      end
+
+      test 'POST /imperator_api/v1/projects/1/copy.json should not create copy without new attr' do
+        post '/imperator_api/v1/projects/1/copy.json', { project: { name: 'eCookbook', identifier: 'ecookbook' } }, credentials('admin')
+        assert_response 409
+      end
+
     end
   end
 end
+
