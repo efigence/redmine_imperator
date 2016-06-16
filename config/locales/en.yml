@@ -5,4 +5,5 @@ en:
       messages:
         not_found: Not found
     use_to_edit_project_details: To edit project details, use
+    use_to_edit_project_members: To manage project members, use
     imperator_genitive: Imperator
