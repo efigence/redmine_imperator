@@ -9,7 +9,7 @@ module ImperatorApi
       end
 
       def self.imperator_api_key
-        YAML.load(read_key_file)['imperator_api_key']['default']
+        YAML.load(read_key_file)[Rails.env]['imperator_api_key']['default']
       end
 
       TOKEN = imperator_api_key

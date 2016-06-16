@@ -1,0 +1,7 @@
+pl:
+  redmine_imperator:
+    errors:
+      messages:
+        not_found: Not found
+    use_to_edit_project_details: Aby wyedytować szczegóły projektu, użyj
+    imperator_genitive: Imperatora
