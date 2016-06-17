@@ -1,0 +1,23 @@
+<div class="warning">
+  <%= t('redmine_imperator.use_to_manage_users') %>
+  <%= link_to t('redmine_imperator.imperator_genitive'),
+              "#{Setting.plugin_redmine_imperator['base_url']}/groups",
+              target: '_blank' %>
+</div>
+
+<% if @group.users.any? %>
+  <table class="list users">
+    <thead><tr>
+      <th><%= l(:label_user) %></th>
+    </tr></thead>
+    <tbody>
+    <% @group.users.sort.each do |user| %>
+      <tr id="user-<%= user.id %>" class="<%= cycle 'odd', 'even' %>">
+        <td class="name"><%= link_to_user user %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <p class="nodata"><%= l(:label_no_data) %></p>
+<% end %>
