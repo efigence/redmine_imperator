@@ -1,0 +1,14 @@
+<%= error_messages_for @group %>
+
+<div class="box tabular">
+  <div class="warning">
+    <%= t('redmine_imperator.use_to_edit_group_name') %>
+    <%= link_to t('redmine_imperator.imperator_genitive'),
+                  "#{Setting.plugin_redmine_imperator['base_url']}/groups",
+                  target: '_blank' %>
+  </div>
+
+  <% @group.custom_field_values.each do |value| %>
+    <p><%= custom_field_tag_with_label :group, value %></p>
+  <% end %>
+</div>
