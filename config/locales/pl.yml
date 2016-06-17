@@ -3,6 +3,8 @@ pl:
     errors:
       messages:
         not_found: Not found
-    use_to_edit_project_details: Aby wyedytować szczegóły projektu, użyj
+    use_to_edit_project_details: Aby wyedytować podstawowe szczegóły projektu, użyj
     use_to_edit_project_members: Aby zarządzać członkami projektu, użyj
+    use_to_edit_user_details: Aby wyedytować podstawowe szczegóły użytkownika, użyj
+    use_to_edit_user_groups: Aby zarządzać grupami użytkownika, użyj
     imperator_genitive: Imperatora
