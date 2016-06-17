@@ -22,8 +22,11 @@ module ImperatorApi
       end
 
       def fetch_redirects
-        @controllers = YAML.load(Setting.plugin_redmine_imperator['redirections'] || '{}')
-      rescue Psych::SyntaxError
+        redirects_path = File.expand_path(
+          File.join(File.dirname(__FILE__), '../../../config/redirects.yml')
+        )
+        @controllers = YAML.load(File.read(redirects_path))
+      rescue Psych::SyntaxError, Errno::ENOENT
         @controllers = {}
       end
 

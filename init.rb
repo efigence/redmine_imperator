@@ -6,8 +6,7 @@ Redmine::Plugin.register :redmine_imperator do
   url 'https://github.com/efigence/redmine_imperator'
   author_url 'http://www.efigence.com/'
 
-  settings default: { 'base_url' => '', 'redirecitons' => '' },
-           partial: 'settings/imperator_settings'
+  settings default: { 'base_url' => '' }, partial: 'settings/imperator_settings'
 end
 
 ActionDispatch::Callbacks.to_prepare do

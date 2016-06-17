@@ -4,8 +4,8 @@
 
 <div class="warning">
   <%= t('redmine_imperator.use_to_edit_project_details') %>
-  <%= link_to(t('redmine_imperator.imperator_genitive'),
-              "#{Setting.plugin_redmine_imperator['base_url']}/projects/#{@project.identifier}/edit"),
+  <%= link_to t('redmine_imperator.imperator_genitive'),
+              "#{Setting.plugin_redmine_imperator['base_url']}/projects/#{@project.identifier}/edit",
               target: '_blank' %>
 </div>
 

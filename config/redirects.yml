@@ -1,0 +1,60 @@
+projects:
+  new:
+    path: 'default'
+  create:
+    path: '/projects/new'
+  copy:
+    path: '/projects/%{id}/overview'
+  archive:
+    path: '/projects/%{id}/overview'
+  unarchive:
+    path: '/projects/%{id}/overview'
+  close:
+    path: '/projects/%{id}/overview'
+  reopen:
+    path: '/projects/%{id}/overview'
+  destroy:
+    path: '/projects/%{id}/overview'
+users:
+  new:
+    path: 'default'
+  create:
+    path: '/users/new'
+  destroy:
+    path: '/users/'
+roles:
+  new:
+    path: 'default'
+  create:
+    path: '/roles/new'
+  destroy:
+    path: '/roles'
+groups:
+  new:
+    path: 'default'
+  create:
+    path: '/groups/new'
+  destroy:
+    path: '/groups'
+  add_users:
+    path: '/groups'
+  remove_user:
+    path: '/groups'
+members:
+  new:
+    path: '/projects'
+  create:
+    path: '/projects'
+  update:
+    path: '/projects'
+  destroy:
+    path: '/projects'
+principal_memberships:
+  new:
+    path: '/users'
+  create:
+    path: '/users'
+  update:
+    path: '/users'
+  destroy:
+    path: '/users'
