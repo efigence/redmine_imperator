@@ -11,8 +11,9 @@ Redmine::Plugin.register :redmine_imperator do
 end
 
 ActionDispatch::Callbacks.to_prepare do
-  # require 'imperator_api/patches/projects_helper_patch'
-
   ApplicationController.send(:include, ImperatorApi::Patches::ApplicationControllerPatch)
   ProjectsController.send(:include, ImperatorApi::Patches::ProjectsControllerPatch)
+  UsersController.send(:include, ImperatorApi::Patches::UsersControllerPatch)
+  MyController.send(:include, ImperatorApi::Patches::MyControllerPatch)
+  GroupsController.send(:include, ImperatorApi::Patches::GroupsControllerPatch)
 end
