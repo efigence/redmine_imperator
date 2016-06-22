@@ -224,6 +224,25 @@ module ImperatorApi
         assert_nil Project.find_by_id(2)
       end
 
+      test 'GET /imperator_api/v1/projects/1/copy_source.json' do
+        get '/imperator_api/v1/projects/1/copy_source.json', {}, imperator_api_auth_headers
+        assert_response :success
+        assert_equal 'application/json', @response.content_type
+        json = ActiveSupport::JSON.decode(response.body)
+        assert_kind_of Hash, json
+        assert_nil json['id']
+        assert_equal '', json['name']
+        assert_equal 'Recipes management application', json['description']
+        assert_includes json, 'enabled_modules'
+        assert_includes json, 'trackers'
+        assert_includes json, 'issue_custom_fields'
+        assert_includes json, 'custom_values'
+        assert_includes json, 'all_available_issue_custom_fields'
+        assert_includes json, 'all_available_trackers'
+        refute_nil json['enabled_modules']
+        refute_nil json['trackers']
+      end
+
       test 'POST /imperator_api/v1/projects/1/copy.json should create a copy' do
         post '/imperator_api/v1/projects/1/copy.json', { project: { name: 'Copy', identifier: 'copy' } }, credentials('admin')
         assert_response :created
@@ -236,9 +255,79 @@ module ImperatorApi
 
       test 'POST /imperator_api/v1/projects/1/copy.json should not create copy without new attr' do
         post '/imperator_api/v1/projects/1/copy.json', { project: { name: 'eCookbook', identifier: 'ecookbook' } }, credentials('admin')
-        assert_response 409
+        assert_response 422
+        json = ActiveSupport::JSON.decode(response.body)
+        assert_kind_of Hash, json
+        assert_equal ['has already been taken'], json['identifier']
       end
 
+      test 'POST /imperator_api/v1/projects/1/copy.json with empty params should remove them in copy' do
+        post '/imperator_api/v1/projects/1/copy.json', { project: { name: 'Newname', identifier: 'newidntifier' },
+                                                        enabled_modules: [''],
+                                                        trackers: [''],
+                                                        issue_custom_fields: [''],
+                                                        custom_values: [''] }, credentials('admin')
+        assert_response :created
+        assert_equal 'application/json', @response.content_type
+        json = ActiveSupport::JSON.decode(response.body)
+        assert_kind_of Hash, json     
+        assert_equal 'Newname', json['name']
+        assert_equal 'newidntifier', json['identifier']
+        assert Project.find(json['id']).enabled_modules.empty?
+        assert Project.find(json['id']).trackers.empty?
+        assert Project.find(json['id']).issue_custom_fields.empty?
+        assert Project.find(json['id']).custom_values.empty?
+      end
+
+      test 'POST /imperator_api/v1/projects/1/copy.json should add selected modules, trackers and issue custom fields to copy' do
+        post '/imperator_api/v1/projects/1/copy.json', { project: { name: 'Newname', identifier: 'newidntifier' },
+                                                        enabled_modules: ['wiki', 'news'],
+                                                        trackers: ['Bug', 'Support request'],
+                                                        issue_custom_fields: ['Float field'],
+                                                        custom_values: ['Stable'] }, credentials('admin')
+        assert_response :created
+        assert_equal 'application/json', @response.content_type
+        json = ActiveSupport::JSON.decode(response.body)
+        assert_kind_of Hash, json     
+        assert_equal 'Newname', json['name']
+        assert_equal 'newidntifier', json['identifier']
+        assert_equal 2, Project.find(json['id']).trackers.count
+        assert_equal 2, Project.find(json['id']).enabled_modules.count
+        assert_equal 1, Project.find(json['id']).issue_custom_fields.count
+        assert_equal 1, Project.find(json['id']).custom_values.count
+      end
+
+      test 'POST /imperator_api/v1/projects/1/copy.json should not modify copy options with empty params' do
+        post '/imperator_api/v1/projects/1/copy.json', { project: { name: 'Newname', identifier: 'newidntifier' },
+                                                        enabled_modules: [],
+                                                        trackers: [],
+                                                        issue_custom_fields: [],
+                                                        custom_values: [] }, credentials('admin')
+        assert_response :created
+        assert_equal 'application/json', @response.content_type
+        json = ActiveSupport::JSON.decode(response.body)
+        assert_kind_of Hash, json     
+        assert_equal 'Newname', json['name']
+        assert_equal 'newidntifier', json['identifier']
+        assert_equal 3, Project.find(json['id']).trackers.count
+        assert_equal 10, Project.find(json['id']).enabled_modules.count
+        assert_equal 0, Project.find(json['id']).issue_custom_fields.count
+        assert_equal 1, Project.find(json['id']).custom_values.count
+      end
+
+      test 'POST /imperator_api/v1/projects/1/copy.json should add all when not specified' do
+        post '/imperator_api/v1/projects/1/copy.json', { project: { name: 'Newname', identifier: 'newidntifier' } }, credentials('admin')
+        assert_response :created
+        assert_equal 'application/json', @response.content_type
+        json = ActiveSupport::JSON.decode(response.body)
+        assert_kind_of Hash, json     
+        assert_equal 'Newname', json['name']
+        assert_equal 'newidntifier', json['identifier']
+        assert_equal 3, Project.find(json['id']).trackers.count
+        assert_equal 10, Project.find(json['id']).enabled_modules.count
+        assert_equal 0, Project.find(json['id']).issue_custom_fields.count
+        assert_equal 1, Project.find(json['id']).custom_values.count
+      end
     end
   end
 end

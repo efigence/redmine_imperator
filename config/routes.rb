@@ -11,7 +11,8 @@ scope module: 'imperator_api', path: '/imperator_api' do
         resources :memberships, controller: 'members', only: [:index, :show, :create, :update, :destroy]
       end
         member do
-          post 'copy'
+            get  'copy_source'
+            post 'copy'
         end
     end
 
