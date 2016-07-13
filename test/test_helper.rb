@@ -28,12 +28,7 @@ Redmine::IntegrationTest.class_eval do
 
   def credentials(user, password = nil, auth_headers = {})
     imperator_api_auth_headers.merge('HTTP_AUTHORIZATION' => ActionController::HttpAuthentication::Basic
-                                                               .encode_credentials(user, password || user))
-                              .merge(auth_headers)
+                                                            .encode_credentials(user, password || user))
+                                                            .merge(auth_headers)
   end
-end
-
-def imperator_api_auth_headers(headers = {})
-  { 'HTTP_ACCEPT' => 'application/vnd.imperator_api+json; version=1',
-    'HTTP_X_IMPERATOR_API_KEY' => ::ImperatorApi::Key.new.show_secret }.merge(headers)
 end

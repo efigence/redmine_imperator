@@ -6,11 +6,11 @@ module ImperatorApi
           controller.send :expire_action, :controller => '/welcome', :action => 'robots'
         end
       end
-      accept_api_auth :index, :show, :create, :update, :destroy, :copy
+      accept_api_auth :index, :show, :create, :update, :destroy, :copy_source, :copy
       include Concerns::ErrorHandling
       include Concerns::AccessControl
 
-def copy_source
+      def copy_source
         @issue_custom_fields = IssueCustomField.sorted.to_a
         @trackers = Tracker.sorted.to_a
         @source_project = Project.find(params[:id])
