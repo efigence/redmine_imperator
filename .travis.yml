@@ -10,6 +10,7 @@ rvm:
   - 2.1
 env:
   - REDMINE_VERSION=3.0.1 VERBOSE=no DB=mysql
+  - TRAVIS_TEST=1
 script:
   - PLUGIN_DIR=$(pwd)
   - export PLUGIN=redmine_imperator
