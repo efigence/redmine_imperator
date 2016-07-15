@@ -9,7 +9,7 @@ module ImperatorApi
       def create
         @project = Project.where(name: "Nieświadczenie usług").first!
         params[:time_entry][:issue_id] = '' 
-        @time_entry ||= TimeEntry.new(:project => @project, :issue => @issue, :user => User.current, :spent_on => User.current.today)
+        @time_entry ||= TimeEntry.new(:project => @project, :user => User.current, :spent_on => User.current.today)
         @time_entry.safe_attributes = params[:time_entry]
         if @time_entry.project && !User.current.allowed_to?(:log_time, @time_entry.project)
           @project = nil

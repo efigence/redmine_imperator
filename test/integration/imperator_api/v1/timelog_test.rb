@@ -9,6 +9,7 @@ module ImperatorApi
       end
 
       def test_post_create
+        print Rails.env
         assert_difference 'TimeEntry.count' do
           post '/imperator_api/v1/time_entries.json', {
             :project_id => 2,
@@ -30,6 +31,7 @@ module ImperatorApi
       end
 
       def test_post_create_with_blank_issue
+        print Rails.env
         assert_difference 'TimeEntry.count' do
           post '/imperator_api/v1/time_entries.json', {
             :project_id => 2,
@@ -54,10 +56,9 @@ module ImperatorApi
         entry = TimeEntry.find(1)
         assert_equal 1, entry.issue_id
         assert_equal 2, entry.user_id
-
         put '/imperator_api/v1/time_entries/1.json', {
-                    :time_entry => {:issue_id => '2',
-                                    :hours => '8'}}, credentials('admin')
+          :time_entry => {:issue_id => '2',
+                          :hours => '8'}}, credentials('admin')
         assert_response 200
         entry.reload
         assert_equal 8, entry.hours
