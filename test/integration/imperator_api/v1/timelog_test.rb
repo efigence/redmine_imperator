@@ -9,7 +9,6 @@ module ImperatorApi
       end
 
       def test_post_create
-        skip if ENV['TRAVIS_TEST']
         assert_difference 'TimeEntry.count' do
           post '/imperator_api/v1/time_entries.json', {
             :project_id => 2,
@@ -31,7 +30,6 @@ module ImperatorApi
       end
 
       def test_post_create_with_blank_issue
-        skip if ENV['TRAVIS_TEST']
         assert_difference 'TimeEntry.count' do
           post '/imperator_api/v1/time_entries.json', {
             :project_id => 2,
