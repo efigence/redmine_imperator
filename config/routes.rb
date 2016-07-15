@@ -18,6 +18,8 @@ scope module: 'imperator_api', path: '/imperator_api' do
 
     get 'robots.txt', to: 'welcome#robots'
 
+    resources :time_entries, controller: 'timelog', only: [:create, :update, :destroy]
+
     resources :roles, except: [:new, :edit]
     resources :users, except: [:new, :edit]
 
