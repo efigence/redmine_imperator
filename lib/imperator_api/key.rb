@@ -1,15 +1,10 @@
 # ImperatorApi::Key.new.show_secret
 # ImperatorApi::Key.new.matches?('123qwe')
-require 'yaml'
 module ImperatorApi
   class Key
     class Secret
-      def self.read_key_file
-        File.read(File.expand_path(File.dirname(__FILE__) + '/../../../../config/settings.yml'))
-      end
-
       def self.imperator_api_key
-        YAML.load(read_key_file)[Rails.env]['imperator_api_key']['default']
+        Setting.plugin_redmine_imperator['api_key']
       end
 
       TOKEN = imperator_api_key
