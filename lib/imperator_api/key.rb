@@ -5,7 +5,7 @@ module ImperatorApi
   class Key
     class Secret
       def self.read_key_file
-        File.read(File.expand_path(File.dirname(__FILE__) + '/../../config/settings.yml'))
+        File.read(File.expand_path(File.dirname(__FILE__) + '/../../../../config/settings.yml'))
       end
 
       def self.imperator_api_key
