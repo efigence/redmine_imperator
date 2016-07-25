@@ -3,14 +3,8 @@
 module ImperatorApi
   class Key
     class Secret
-      def self.imperator_api_key
-        Setting.plugin_redmine_imperator['api_key']
-      end
-
-      TOKEN = imperator_api_key
-
       def to_s
-        TOKEN
+        Setting.plugin_redmine_imperator['api_key']
       end
     end
     private_constant :Secret
