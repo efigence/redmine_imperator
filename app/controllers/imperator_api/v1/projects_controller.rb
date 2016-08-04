@@ -6,7 +6,8 @@ module ImperatorApi
           controller.send :expire_action, :controller => '/welcome', :action => 'robots'
         end
       end
-      accept_api_auth :index, :show, :create, :update, :destroy, :copy_source, :copy
+      accept_api_auth :index, :show, :create, :update, :destroy, :copy_source,
+                      :copy, :archive, :unarchive, :close, :reopen
       include Concerns::ErrorHandling
       include Concerns::AccessControl
 

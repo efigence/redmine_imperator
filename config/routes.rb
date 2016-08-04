@@ -13,13 +13,17 @@ scope module: 'imperator_api', path: '/imperator_api' do
         member do
             get  'copy_source'
             post 'copy'
+            post 'archive'
+            post 'unarchive'
+            post 'close'
+            post 'reopen'
         end
     end
 
     get 'robots.txt', to: 'welcome#robots'
 
     resources :time_entries, controller: 'timelog', only: [:create, :update, :destroy] do
-        collection do 
+        collection do
             post 'bulk_update'
         end
     end
