@@ -18,6 +18,7 @@ module ImperatorApi
         @project = Project.copy_from(@source_project)
         @project.identifier = Project.next_identifier if Setting.sequential_project_identifiers?
         @source_for_copy = @project.attributes
+        @source_for_copy['ancestors'] = @source_project.ancestors
         @source_for_copy['enabled_modules'] = @project.enabled_modules
         @source_for_copy['trackers'] = @project.trackers
         @source_for_copy['custom_values'] = @project.custom_values
