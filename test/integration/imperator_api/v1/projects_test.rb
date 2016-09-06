@@ -244,6 +244,18 @@ module ImperatorApi
         refute_nil json['trackers']
       end
 
+      test 'GET /imperator_api/v1/projects/4/copy_source.json should return ancestors' do
+        skip if ENV['TRAVIS']
+        get '/imperator_api/v1/projects/4/copy_source.json', {}, imperator_api_auth_headers
+        assert_response :success
+        assert_equal 'application/json', @response.content_type
+        json = ActiveSupport::JSON.decode(response.body)
+        assert_kind_of Hash, json
+        assert_nil json['id']
+        refute_equal nil, json['ancestors']
+        assert_equal 'eCookbook', json['ancestors'].first['name']
+      end
+
       test 'POST /imperator_api/v1/projects/1/copy.json should create a copy' do
         post '/imperator_api/v1/projects/1/copy.json', { project: { name: 'Copy', identifier: 'copy' } }, credentials('admin')
         assert_response :created
