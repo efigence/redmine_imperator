@@ -1,3 +1,10 @@
+<div class="warning">
+  <%= t('redmine_imperator.use_imperator_to_change_password') %>
+  <%= link_to t('redmine_imperator.imperator_genitive'),
+              "#{Setting.plugin_redmine_imperator['base_url']}/profile",
+              target: '_blank' %>
+</div>
+
 <div class="contextual">
 <%= additional_emails_link(@user) %>
 <%= link_to(l(:button_change_password), {:action => 'password'}, :class => 'icon icon-passwd') if @user.change_password_allowed? %>
