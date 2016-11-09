@@ -38,7 +38,8 @@ bundle exec rake redmine:plugins:test NAME=redmine_imperator
 
 ```
 # first, follow instructions from: https://github.com/dadooda/bundler-gemlocal
-# if you use ~/.bash_profile separately from ~/.bashrc, also source the .sh file there
+# if you use ~/.bash_profile separately from ~/.bashrc, also source the .sh file there:
+# [ -f bundler-gemlocal.sh ] && . bundler-gemlocal.sh
 cd ~/redmine/plugins/redmine_imperator/
 
 # copy config files
