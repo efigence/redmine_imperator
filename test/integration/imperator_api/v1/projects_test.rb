@@ -224,25 +224,37 @@ module ImperatorApi
         assert_nil Project.find_by_id(2)
       end
       
-  # # This test passes locally, but fails on Travis CI because of a currently unknown authentication issue.
-  #     test 'GET /imperator_api/v1/projects/1/copy_source.json' do
-  #       get '/imperator_api/v1/projects/1/copy_source.json', {}, imperator_api_auth_headers
-  #       assert_response :success
-  #       assert_equal 'application/json', @response.content_type
-  #       json = ActiveSupport::JSON.decode(response.body)
-  #       assert_kind_of Hash, json
-  #       assert_nil json['id']
-  #       assert_equal '', json['name']
-  #       assert_equal 'Recipes management application', json['description']
-  #       assert_includes json, 'enabled_modules'
-  #       assert_includes json, 'trackers'
-  #       assert_includes json, 'issue_custom_fields'
-  #       assert_includes json, 'custom_values'
-  #       assert_includes json, 'all_available_issue_custom_fields'
-  #       assert_includes json, 'all_available_trackers'
-  #       refute_nil json['enabled_modules']
-  #       refute_nil json['trackers']
-  #     end
+      test 'GET /imperator_api/v1/projects/1/copy_source.json' do
+        skip if ENV['TRAVIS']
+        get '/imperator_api/v1/projects/1/copy_source.json', {}, imperator_api_auth_headers
+        assert_response :success
+        assert_equal 'application/json', @response.content_type
+        json = ActiveSupport::JSON.decode(response.body)
+        assert_kind_of Hash, json
+        assert_nil json['id']
+        assert_equal '', json['name']
+        assert_equal 'Recipes management application', json['description']
+        assert_includes json, 'enabled_modules'
+        assert_includes json, 'trackers'
+        assert_includes json, 'issue_custom_fields'
+        assert_includes json, 'custom_values'
+        assert_includes json, 'all_available_issue_custom_fields'
+        assert_includes json, 'all_available_trackers'
+        refute_nil json['enabled_modules']
+        refute_nil json['trackers']
+      end
+
+      test 'GET /imperator_api/v1/projects/4/copy_source.json should return ancestors' do
+        skip if ENV['TRAVIS']
+        get '/imperator_api/v1/projects/4/copy_source.json', {}, imperator_api_auth_headers
+        assert_response :success
+        assert_equal 'application/json', @response.content_type
+        json = ActiveSupport::JSON.decode(response.body)
+        assert_kind_of Hash, json
+        assert_nil json['id']
+        refute_equal nil, json['ancestors']
+        assert_equal 'eCookbook', json['ancestors'].first['name']
+      end
 
       test 'POST /imperator_api/v1/projects/1/copy.json should create a copy' do
         post '/imperator_api/v1/projects/1/copy.json', { project: { name: 'Copy', identifier: 'copy' } }, credentials('admin')

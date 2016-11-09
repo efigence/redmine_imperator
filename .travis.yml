@@ -24,7 +24,6 @@ script:
   - . bundler-gemlocal.sh
   - cp Gemlocal.example Gemlocal
   - cp config/database.yml.example config/database.yml
-  - cp config/settings.yml.example config/settings.yml
   - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle install --path vendor/gemlocal_aware_bundle
   - BUNDLE_GEMFILE=Gemlocal gemlocal_aware_bundle exec rake test
   - bash -x ./.travis-init.sh -u || exit 1

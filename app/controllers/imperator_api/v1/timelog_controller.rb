@@ -46,6 +46,29 @@ module ImperatorApi
         end
       end
 
+      def bulk_update
+        attributes = parse_params_for_bulk_time_entry_attributes(params)
+
+        unsaved_time_entry_ids = []
+        @time_entries.each do |time_entry|
+          time_entry.reload
+          time_entry.safe_attributes = attributes
+          call_hook(:controller_time_entries_bulk_edit_before_save, { :params => params, :time_entry => time_entry })
+          unless time_entry.save
+            respond_to do |format|
+              format.api { render json: {}, status: 422 }
+            end
+            unsaved_time_entry_ids << time_entry.id
+            set_flash_from_bulk_time_entry_save(@time_entries, unsaved_time_entry_ids)
+            return
+          end
+        end
+        set_flash_from_bulk_time_entry_save(@time_entries, unsaved_time_entry_ids)
+        respond_to do |format|
+          format.api { render json: {}, status: 204 }
+        end
+      end
+
       def destroy
         destroyed = TimeEntry.transaction do
           @time_entries.each do |t|
@@ -64,6 +87,15 @@ module ImperatorApi
             end
           }
         end
+      end
+
+      private
+
+      def find_time_entries
+        @time_entries = TimeEntry.where(:id => params[:id] || params[:ids]).to_a
+        raise ActiveRecord::RecordNotFound if @time_entries.empty?
+        @projects = Project.where(name: "Nieświadczenie usług")
+        @project = Project.where(name: "Nieświadczenie usług").first!
       end
     end
   end

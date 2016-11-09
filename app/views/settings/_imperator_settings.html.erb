@@ -1,5 +1,9 @@
 <p>
   <label for="redmine_imperator_host">Imperator base url</label>
-  <%= text_field_tag 'settings[base_url]',
-                     @settings['base_url'] %>
+  <%= text_field_tag 'settings[base_url]', @settings['base_url'] %>
+</p>
+
+<p>
+  <label for="redmine_imperator_api_key">Imperator API key </label>
+  <%= text_field_tag 'settings[api_key]', @settings['api_key'] %>
 </p>
